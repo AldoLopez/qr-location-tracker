@@ -12,9 +12,6 @@ exports.handler = async (event, context) => {
   console.log(data);
   client
     .query(q.Create(q.Collection('devices'), { data }))
-    .then((data) => ({
-      statusCode: 200,
-      body: `Added device: ${deviceId}`,
-    }))
+    .then((ret) => console.log(ret))
     .catch((err) => console.log(err));
 };
