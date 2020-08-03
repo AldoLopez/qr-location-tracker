@@ -7,7 +7,6 @@ const client = new faunadb.Client({
 });
 
 exports.handler = async (event, context) => {
-  console.log(`KEY: ${FAUNA_KEY}`);
   const deviceId = event.queryStringParameters.deviceId;
   const location = event.queryStringParameters.location;
   const date = new Date().toString();
