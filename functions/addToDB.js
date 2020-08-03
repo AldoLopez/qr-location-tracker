@@ -1,13 +1,13 @@
-const { FAUNA_KEY } = process.env.FAUNA_KEY;
+const { FAUNA_KEY } = process.env;
 const faunadb = require('faunadb'),
   q = faunadb.query;
 
 const client = new faunadb.Client({
-  secret: 'fnADyVv68zACEgZBoEUFMu1OiEaIaD2nrd6qIgxR',
+  secret: FAUNA_KEY,
 });
 
 exports.handler = async (event, context) => {
-  console.log(`KEY: fnADyVv68zACEgZBoEUFMu1OiEaIaD2nrd6qIgxR`);
+  console.log(`KEY: ${FAUNA_KEY}`);
   const deviceId = event.queryStringParameters.deviceId;
   const location = event.queryStringParameters.location;
   const date = new Date().toString();
