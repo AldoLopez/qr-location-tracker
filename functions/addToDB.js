@@ -10,7 +10,6 @@ exports.handler = async (event, context) => {
   const date = new Date().toString();
   const data = { deviceId, location, date };
   console.log(data);
-  alert(data);
   client
     .query(q.Create(q.Collection('devices'), { data }))
     .then((data) => ({
