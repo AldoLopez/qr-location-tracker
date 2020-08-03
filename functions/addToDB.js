@@ -5,7 +5,7 @@ const faunadb = require('faunadb'),
 const client = new faunadb.Client({ secret: FAUNA_KEY });
 
 exports.handler = async (event, context) => {
-  console.log(FAUNA_KEY);
+  console.log(`KEY: ${FAUNA_KEY}`);
   const deviceId = event.queryStringParameters.deviceId;
   const location = event.queryStringParameters.location;
   const date = new Date().toString();
