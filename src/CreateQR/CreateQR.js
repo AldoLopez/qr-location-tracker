@@ -12,7 +12,7 @@ class CreateQR extends React.Component {
   }
 
   setUrlForQR = () => {
-    const qrUrl = `https://qr-location.netlify.app/sendData/deviceId=${this.state.deviceId}`;
+    const qrUrl = `https://qr-location.netlify.app/sendData?deviceId=${this.state.deviceId}`;
     this.setState({
       qrUrl,
     });
