@@ -34,7 +34,6 @@ const getLocation = (location) => {
       })
       .catch((err) => console.log(err));
   });
-  return ret;
 };
 
 const Grid = () => {
