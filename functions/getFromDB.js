@@ -7,6 +7,11 @@ const client = new faunadb.Client({
 });
 
 exports.handler = async (event, context) => {
+  const { identity, user } = context.clientContext;
+  if (!user) {
+    return { statusCode: 403, body: 'You shall not pass!' };
+  }
+
   return client
     .query(q.Get(q.Ref(q.Collection('devices'))))
     .then((ret) => console.log(ret))
