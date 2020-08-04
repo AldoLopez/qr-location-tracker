@@ -44,16 +44,15 @@ const Grid = () => {
         .then((response) => {
           console.log(response);
           const data = response.data.data;
-          const dataRows = [];
-          data.forEach(async (row) => {
+          const dataRows = data.map(async (row) => {
             const res = await getLocation(JSON.parse(row.data.location));
-            dataRows.push({
+            return {
               deviceId: row.data.deviceId,
               date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
                 DateTime.DATETIME_MED
               ),
               location: `${res.city}, ${res.state}`,
-            });
+            };
           });
           setRows(dataRows);
         })
@@ -62,25 +61,6 @@ const Grid = () => {
         })
         .catch((err) => console.log(err));
     });
-    // const fakeRows = [
-    //   {
-    //     deviceId: 'dsfsdgfsd',
-    //     date: new Date('11/12/2019').toISOString(),
-    //     location: 'newark',
-    //   },
-    //   {
-    //     deviceId: '23232',
-    //     date: new Date('1/2/2020').toISOString(),
-    //     location: 'plainfield',
-    //   },
-    //   {
-    //     deviceId: '3rngvee',
-    //     date: new Date('11/12/2018').toISOString(),
-    //     location: 'dunnellen',
-    //   },
-    // ];
-    // setRows(fakeRows);
-    // setLoading(false);
   };
 
   const getLocation = (location) => {
