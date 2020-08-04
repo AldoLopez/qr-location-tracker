@@ -4,22 +4,35 @@ import 'react-data-grid/dist/react-data-grid.css';
 import axios from 'axios';
 import netlifyIdentity from 'netlify-identity-widget';
 import { DateTime } from 'luxon';
+import { generateHeaders } from '../../identityActions';
 
-// const getLocation = (location) => {
-//   // TODO get google map url to lat/long and convert to city name
-// };
+const getLocation = async (location) => {
+  return await generateHeaders().then((headers) => {
+    axios
+      .get(
+        'https://qr-location.netlify.app/.netlify/functions/convertLocationData',
+        {
+          headers,
+          params: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        const city = response.city;
+        const state = response.state_code;
+        const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
 
-const generateHeaders = () => {
-  const headers = { 'Content-Type': 'application/json' };
-  if (netlifyIdentity.currentUser()) {
-    return netlifyIdentity
-      .currentUser()
-      .jwt()
-      .then((token) => {
-        return { ...headers, Authorization: `Bearer ${token}` };
-      });
-  }
-  return Promise.resolve(headers);
+        return {
+          city,
+          state,
+          link,
+        };
+      })
+      .catch((err) => console.log(err));
+  });
 };
 
 const Grid = () => {
@@ -62,13 +75,16 @@ const Grid = () => {
           console.log(response);
           const data = response.data.data;
           const dataRows = [];
-          data.forEach((row) => {
+          data.forEach(async (row) => {
+            const locationObject = await getLocation(
+              JSON.parse(row.data.location)
+            );
             dataRows.push({
               deviceId: row.data.deviceId,
               date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
                 DateTime.DATETIME_MED
               ),
-              location: row.data.location,
+              location: `${locationObject.city}, ${locationObject.state}`,
             });
           });
           setRows(dataRows);
