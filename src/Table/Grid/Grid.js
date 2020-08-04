@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ReactDataGrid from 'react-data-grid';
+import DataGrid from 'react-data-grid';
+import 'react-data-grid/dist/react-data-grid.css';
 import axios from 'axios';
 import netlifyIdentity from 'netlify-identity-widget';
 
@@ -24,6 +25,10 @@ const Grid = () => {
   const [rows, setRows] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const defaultColumnProperties = {
+    sortable: true,
+  };
+
   const columns = [
     {
       key: 'deviceId',
@@ -32,12 +37,13 @@ const Grid = () => {
     {
       key: 'date',
       name: 'Date',
+      sortDescendingFirst: true,
     },
     {
       key: 'location',
       name: 'Location',
     },
-  ];
+  ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
   useEffect(() => {
     if (!rows) {
@@ -58,7 +64,9 @@ const Grid = () => {
           data.forEach((row) => {
             dataRows.push({
               deviceId: row.data.deviceId,
-              date: row.data.date,
+              date: `${new Date(row.data.date).toDateString()} at${new Date(
+                row.data.date
+              ).toTimeString()}`,
               location: row.data.location,
             });
           });
@@ -69,12 +77,55 @@ const Grid = () => {
         })
         .catch((err) => console.log(err));
     });
+    // const fakeRows = [
+    //   {
+    //     deviceId: 'dsfsdgfsd',
+    //     date: new Date('11/12/2019').toISOString(),
+    //     location: 'newark',
+    //   },
+    //   {
+    //     deviceId: '23232',
+    //     date: new Date('1/2/2020').toISOString(),
+    //     location: 'plainfield',
+    //   },
+    //   {
+    //     deviceId: '3rngvee',
+    //     date: new Date('11/12/2018').toISOString(),
+    //     location: 'dunnellen',
+    //   },
+    // ];
+    // setRows(fakeRows);
+    // setLoading(false);
+  };
+
+  const [direction, setDirection] = useState(true);
+
+  const sortRows = (initialRows, sortColumn, sortDirection) => (rows) => {
+    const comparer = (a, b) => {
+      if (direction) {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } else {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      }
+    };
+    setDirection(!direction);
+    return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
   };
 
   if (loading) {
     return <div> Loading </div>;
   } else {
-    return <ReactDataGrid columns={columns} rows={rows} rowsCount={10} />;
+    return (
+      <div>
+        <DataGrid
+          columns={columns}
+          rows={rows}
+          onSort={(sortColumn, sortDirection) =>
+            setRows(sortRows(rows, sortColumn, sortDirection))
+          }
+        />
+      </div>
+    );
   }
 };
 
