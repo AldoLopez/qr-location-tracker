@@ -14,20 +14,24 @@ exports.handler = async (event, context) => {
     return { statusCode: 403, body: 'You shall not pass!' };
   }
   // new loca
-  return client
+  const results = client
     .query(
       q.Map(
         q.Paginate(q.Match(q.Index('all'))),
         q.Lambda((x) => q.Get(x))
       )
     )
-    .then((ret) => ({
-      statusCode: 200,
-      body: ret,
-      data: ret,
-    }))
+    .then((ret) => {
+      console.log(JSON.parse(ret));
+      return {
+        statusCode: 200,
+        body: JSON.parse(ret),
+      };
+    })
     .catch((err) => ({
       statusCode: 422,
       body: String(err),
     }));
+  console.log(`Results: ${JSON.stringify(results)}`);
+  return results;
 };
