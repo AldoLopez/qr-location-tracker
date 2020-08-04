@@ -24,5 +24,3 @@ exports.handler = async (event, context) => {
     .then((ret) => console.log(ret))
     .catch((err) => console.log(err));
 };
-
-devices;
