@@ -30,7 +30,7 @@ const Grid = () => {
   ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
   useEffect(() => {
-    if (row.length === 0) {
+    if (rows.length === 0) {
       getRows();
     }
   });
@@ -121,7 +121,7 @@ const Grid = () => {
     return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
   };
 
-  if (row.length > 0) {
+  if (rows.length > 0) {
     return <div> Loading </div>;
   } else {
     return (
