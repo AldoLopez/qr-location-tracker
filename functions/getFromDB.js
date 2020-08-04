@@ -22,10 +22,9 @@ exports.handler = async (event, context) => {
       )
     )
     .then((ret) => {
-      console.log(JSON.parse(ret));
       return {
         statusCode: 200,
-        body: JSON.parse(ret),
+        body: ret,
       };
     })
     .catch((err) => ({
