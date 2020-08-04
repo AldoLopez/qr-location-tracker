@@ -121,7 +121,7 @@ const Grid = () => {
     return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
   };
 
-  if (rows.length > 0) {
+  if (rows.length > 0 || loading) {
     return <div> Loading </div>;
   } else {
     return (
