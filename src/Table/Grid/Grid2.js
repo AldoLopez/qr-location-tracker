@@ -172,11 +172,8 @@ export default function Grid() {
   };
 
   useEffect(() => {
-    if (first) {
-      getRows();
-      setFirst(false);
-    }
-  }, [first]);
+    getRows();
+  });
 
   const getLocation = (location) => {
     return axios
