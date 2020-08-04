@@ -20,8 +20,8 @@ const getLocation = async (location) => {
       )
       .then((response) => {
         console.log(response);
-        const city = response.city;
-        const state = response.state_code;
+        const city = response.data.city;
+        const state = response.data.state_code;
         const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
 
         return {
