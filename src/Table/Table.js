@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from './Grid/Grid';
+import Grid from './Grid/Grid2';
 import './Table.css';
 
 class Table extends React.Component {
