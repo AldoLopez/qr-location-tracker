@@ -53,11 +53,19 @@ const Grid = () => {
         })
         .then((response) => {
           console.log(response);
-          // set rows and massage
-          setRows(['1']);
+          const data = response.data.data;
+          constDataRows = [];
+          data.foreach((row) => {
+            constDataRows.push({
+              deviceId: row.data.deviceId,
+              date: row.data.date,
+              location: row.data.location,
+            });
+          });
+          setRows(constDataRows);
         })
         .then(() => {
-          setLoading(true);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     });
