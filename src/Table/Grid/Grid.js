@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DataGrid from 'react-data-grid';
 import 'react-data-grid/dist/react-data-grid.css';
 import axios from 'axios';
-import netlifyIdentity from 'netlify-identity-widget';
 import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
