@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
     return { statusCode: 403, body: 'You shall not pass!' };
   }
   // new loca
-  const results = client
+  const results = await client
     .query(
       q.Map(
         q.Paginate(q.Match(q.Index('all'))),
