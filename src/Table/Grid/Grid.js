@@ -6,8 +6,8 @@ import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
 const getLocation = async (location) => {
-  return await generateHeaders().then((headers) => {
-    axios
+  return await generateHeaders().then(async (headers) => {
+    await axios
       .get(
         'https://qr-location.netlify.app/.netlify/functions/convertLocationData',
         {
