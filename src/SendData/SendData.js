@@ -1,26 +1,37 @@
 import React from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import queryString from 'query-string';
+import { withRouter } from 'react-router';
 
 class SendData extends React.Component {
   constructor(props) {
     super(props);
+    alert(JSON.stringify(props));
+    const parsed = queryString.parse(props.location.search);
     this.state = {
       location: 'not-supported',
-      deviceId: useParams(),
+      deviceId: parsed.deviceId,
     };
   }
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.getPosition);
-      this.sendData();
     }
   }
 
   getPosition = (location) => {
-    this.setState({
-      location,
-    });
+    this.setState(
+      {
+        location: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        },
+      },
+      () => {
+        alert(location);
+        this.sendData();
+      }
+    );
   };
 
   sendData = () => {
@@ -40,4 +51,4 @@ class SendData extends React.Component {
   }
 }
 
-export default SendData;
+export default withRouter(SendData);

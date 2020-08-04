@@ -2,6 +2,8 @@ import React from 'react';
 import './CreateQr.css';
 import QRCode from 'qrcode.react';
 import { TextField, Button } from '@material-ui/core';
+import { printExistingElement } from 'react-print-tool';
+
 class CreateQR extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,10 @@ class CreateQR extends React.Component {
     this.setState({
       deviceId: e.target.value,
     });
+  };
+
+  printQR = async () => {
+    await printExistingElement('#qrCodeDiv');
   };
   render() {
     return (
@@ -44,7 +50,12 @@ class CreateQR extends React.Component {
           </Button>
         </div>
         <br />
-        <div>{this.state.qrUrl && <QRCode value={this.state.qrUrl} />}</div>
+        <div id='qrCodeDiv'>
+          {this.state.qrUrl && <QRCode value={this.state.qrUrl} />}
+        </div>
+        {false && (
+          <Button onClick={async () => this.printQR()}>Print QR Code</Button>
+        )}
       </div>
     );
   }

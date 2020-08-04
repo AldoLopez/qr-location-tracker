@@ -22,9 +22,11 @@
     "passport-local": "^1.0.0",
     "qrcode": "^1.4.4",
     "qrcode.react": "^1.0.0",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-data-grid": "^7.0.0-canary.17",
     "react-dom": "^16.13.1",
+    "react-print-tool": "^3.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },

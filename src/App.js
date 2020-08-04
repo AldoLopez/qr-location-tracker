@@ -74,7 +74,7 @@ class App extends React.Component {
             <section>
               <Route exact path='/table' component={auth(Table)} />
               <Route exact path='/create-qr' component={auth(CreateQR)} />
-              <Route exact path='/sendData?:deviceId' component={SendData} />
+              <Route exact path='/sendData' component={SendData} />
             </section>
           </div>
         </Router>
