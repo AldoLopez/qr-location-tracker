@@ -44,22 +44,18 @@ const Grid = () => {
         .then(async (response) => {
           console.log(response);
           const data = response.data.data;
-          const dataRows = Promise.all(
-            data.map(async (row) => {
-              const res = await getLocation(JSON.parse(row.data.location));
-              return {
-                deviceId: row.data.deviceId,
-                date: DateTime.fromJSDate(
-                  new Date(row.data.date)
-                ).toLocaleString(DateTime.DATETIME_MED),
-                location: `${res.city}, ${res.state}`,
-              };
-            })
-          );
-          dataRows.then((rows) => {
-            console.log(rows);
-            setGridRows(rows);
+          const dataRows = [];
+          data.forEach(async (row) => {
+            const res = await getLocation(JSON.parse(row.data.location));
+            dataRows.push({
+              deviceId: row.data.deviceId,
+              date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
+                DateTime.DATETIME_MED
+              ),
+              location: `${res.city}, ${res.state}`,
+            });
           });
+          setGridRows(dataRows);
         })
         .then(() => {
           setLoading(false);
