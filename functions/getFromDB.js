@@ -21,6 +21,12 @@ exports.handler = async (event, context) => {
         q.Lambda((x) => q.Get(x))
       )
     )
-    .then((ret) => console.log(ret))
+    .then((ret) => {
+      console.log(ret);
+      return {
+        statusCode: 200,
+        body: ret,
+      };
+    })
     .catch((err) => console.log(err));
 };
