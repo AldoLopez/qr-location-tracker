@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
 const Grid = () => {
-  const [rows, setRows] = useState(null);
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const defaultColumnProperties = {
@@ -30,7 +30,7 @@ const Grid = () => {
   ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
   useEffect(() => {
-    if (!rows) {
+    if (row.length === 0) {
       getRows();
     }
   });
@@ -121,13 +121,12 @@ const Grid = () => {
     return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
   };
 
-  if (loading) {
+  if (row.length > 0) {
     return <div> Loading </div>;
   } else {
     return (
       <div>
         <DataGrid
-          key={rows.length}
           columns={columns}
           rows={rows}
           onSort={(sortColumn, sortDirection) =>
