@@ -3,21 +3,6 @@ import ReactDataGrid from 'react-data-grid';
 import axios from 'axios';
 import netlifyIdentity from 'netlify-identity-widget';
 
-const columns = [
-  {
-    key: 'deviceId',
-    name: 'Device Id',
-  },
-  {
-    key: 'date',
-    name: 'Date',
-  },
-  {
-    key: 'location',
-    name: 'Location',
-  },
-];
-
 // const getLocation = (location) => {
 //   // TODO get google map url to lat/long and convert to city name
 // };
@@ -38,6 +23,21 @@ const generateHeaders = () => {
 const Grid = () => {
   const [rows, setRows] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const columns = [
+    {
+      key: 'deviceId',
+      name: 'Device Id',
+    },
+    {
+      key: 'date',
+      name: 'Date',
+    },
+    {
+      key: 'location',
+      name: 'Location',
+    },
+  ];
 
   useEffect(() => {
     if (!rows) {
