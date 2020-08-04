@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
   if (!user) {
     return { statusCode: 403, body: 'You shall not pass!' };
   }
-
+  // new loca
   return client
     .query(
       q.Map(
