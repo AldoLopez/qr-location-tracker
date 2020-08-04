@@ -5,37 +5,6 @@ import axios from 'axios';
 import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
-const getLocation = (location) => {
-  return generateHeaders().then((headers) => {
-    axios
-      .get(
-        'https://qr-location.netlify.app/.netlify/functions/convertLocationData',
-        {
-          headers,
-          params: {
-            latitude: location.latitude,
-            longitude: location.longitude,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.data) {
-          const city = response.data.city;
-          const state = response.data.state_code;
-          const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
-
-          return {
-            city,
-            state,
-            link,
-          };
-        }
-      })
-      .catch((err) => console.log(err));
-  });
-};
-
 const Grid = () => {
   const [rows, setRows] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +38,7 @@ const Grid = () => {
   const getRows = () => {
     generateHeaders().then((headers) => {
       axios
-        .get('https://qr-location.netlify.app/.netlify/functions/getFromDB', {
+        .get('/.netlify/functions/getFromDB', {
           headers,
         })
         .then((response) => {
@@ -77,17 +46,15 @@ const Grid = () => {
           const data = response.data.data;
           const dataRows = [];
           data.forEach(async (row) => {
-            getLocation(JSON.parse(row.data.location)).then(
-              (locationObject) => {
-                dataRows.push({
-                  deviceId: row.data.deviceId,
-                  date: DateTime.fromJSDate(
-                    new Date(row.data.date)
-                  ).toLocaleString(DateTime.DATETIME_MED),
-                  location: `${locationObject.city}, ${locationObject.state}`,
-                });
-              }
-            );
+            getLocation(JSON.parse(row.data.location)).then((res) => {
+              dataRows.push({
+                deviceId: row.data.deviceId,
+                date: DateTime.fromJSDate(
+                  new Date(row.data.date)
+                ).toLocaleString(DateTime.DATETIME_MED),
+                location: `${res.city}, ${res.state}`,
+              });
+            });
           });
           setRows(dataRows);
         })
@@ -115,6 +82,37 @@ const Grid = () => {
     // ];
     // setRows(fakeRows);
     // setLoading(false);
+  };
+
+  const getLocation = (location) => {
+    return generateHeaders().then((headers) => {
+      axios
+        .get('/.netlify/functions/convertLocationData', {
+          headers,
+          params: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.data) {
+            const city = response.data.city;
+            const state = response.data.state_code;
+            const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
+
+            return {
+              city,
+              state,
+              link,
+            };
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(`this was an error: ${err}`);
+        });
+    });
   };
 
   const [direction, setDirection] = useState(true);
