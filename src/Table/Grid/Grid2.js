@@ -176,7 +176,7 @@ export default function Grid() {
       getRows();
       setFirst(false);
     }
-  }, [getRows, first]);
+  }, [first]);
 
   const getLocation = (location) => {
     return axios
