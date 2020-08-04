@@ -57,9 +57,7 @@ const Grid = () => {
               location: `${res.city}, ${res.state}`,
             });
           });
-          if (dataRows.length > 0) {
-            setGridRows(dataRows);
-          }
+          setGridRows(dataRows);
         })
         .then(() => {
           setLoading(false);
