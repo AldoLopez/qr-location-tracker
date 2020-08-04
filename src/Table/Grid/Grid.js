@@ -54,15 +54,15 @@ const Grid = () => {
         .then((response) => {
           console.log(response);
           const data = response.data.data;
-          constDataRows = [];
+          const dataRows = [];
           data.foreach((row) => {
-            constDataRows.push({
+            dataRows.push({
               deviceId: row.data.deviceId,
               date: row.data.date,
               location: row.data.location,
             });
           });
-          setRows(constDataRows);
+          setRows(dataRows);
         })
         .then(() => {
           setLoading(false);
