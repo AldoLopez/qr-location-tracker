@@ -107,10 +107,6 @@ const Grid = () => {
               link,
             };
           }
-        })
-        .catch((err) => {
-          console.log(err);
-          console.log(`this was an error: ${err}`);
         });
     });
   };
