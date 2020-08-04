@@ -74,13 +74,7 @@ const Grid = () => {
   if (loading) {
     return <div> Loading </div>;
   } else {
-    return (
-      <ReactDataGrid
-        columns={columns}
-        rowGetter={(i) => rows[i]}
-        rowsCount={10}
-      />
-    );
+    return <ReactDataGrid columns={columns} rows={rows} rowsCount={10} />;
   }
 };
 
