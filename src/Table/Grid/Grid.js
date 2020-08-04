@@ -17,15 +17,17 @@ const Grid = () => {
     {
       key: 'deviceId',
       name: 'Device Id',
+      sortable: true,
     },
     {
       key: 'date',
       name: 'Date',
-      sortDescendingFirst: true,
+      sortable: true,
     },
     {
       key: 'location',
       name: 'Location',
+      sortable: true,
     },
   ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
@@ -55,7 +57,9 @@ const Grid = () => {
               location: `${res.city}, ${res.state}`,
             });
           });
-          setGridRows(dataRows);
+          if (dataRows.length > 0) {
+            setGridRows(dataRows);
+          }
         })
         .then(() => {
           setLoading(false);
