@@ -55,7 +55,7 @@ const Grid = () => {
           console.log(response);
           const data = response.data.data;
           const dataRows = [];
-          data.foreach((row) => {
+          data.forEach((row) => {
             dataRows.push({
               deviceId: row.data.deviceId,
               date: row.data.date,
