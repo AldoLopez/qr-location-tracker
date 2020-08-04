@@ -127,6 +127,7 @@ const Grid = () => {
     return (
       <div>
         <DataGrid
+          key={rows.length}
           columns={columns}
           rows={rows}
           onSort={(sortColumn, sortDirection) =>
