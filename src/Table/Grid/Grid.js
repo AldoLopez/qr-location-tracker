@@ -5,9 +5,9 @@ import axios from 'axios';
 import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
-const getLocation = async (location) => {
-  const ret = await generateHeaders().then(async (headers) => {
-    await axios
+const getLocation = (location) => {
+  return generateHeaders().then((headers) => {
+    axios
       .get(
         'https://qr-location.netlify.app/.netlify/functions/convertLocationData',
         {
@@ -78,16 +78,17 @@ const Grid = () => {
           const data = response.data.data;
           const dataRows = [];
           data.forEach(async (row) => {
-            const locationObject = await getLocation(
-              JSON.parse(row.data.location)
+            getLocation(JSON.parse(row.data.location)).then(
+              (locationObject) => {
+                dataRows.push({
+                  deviceId: row.data.deviceId,
+                  date: DateTime.fromJSDate(
+                    new Date(row.data.date)
+                  ).toLocaleString(DateTime.DATETIME_MED),
+                  location: `${locationObject.city}, ${locationObject.state}`,
+                });
+              }
             );
-            dataRows.push({
-              deviceId: row.data.deviceId,
-              date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
-                DateTime.DATETIME_MED
-              ),
-              location: `${locationObject.city}, ${locationObject.state}`,
-            });
           });
           setRows(dataRows);
         })
