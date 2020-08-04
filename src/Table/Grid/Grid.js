@@ -46,7 +46,7 @@ const Grid = () => {
           const data = response.data.data;
           const dataRows = [];
           data.forEach(async (row) => {
-            getLocation(JSON.parse(row.data.location)).then((res) => {
+            await getLocation(JSON.parse(row.data.location)).then((res) => {
               dataRows.push({
                 deviceId: row.data.deviceId,
                 date: DateTime.fromJSDate(
