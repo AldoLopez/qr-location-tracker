@@ -41,10 +41,10 @@ const Grid = () => {
         .get('/.netlify/functions/getFromDB', {
           headers,
         })
-        .then((response) => {
+        .then(async (response) => {
           console.log(response);
           const data = response.data.data;
-          const dataRows = data.map(async (row) => {
+          const dataRows = await data.map(async (row) => {
             const res = await getLocation(JSON.parse(row.data.location));
             return {
               deviceId: row.data.deviceId,
