@@ -15,7 +15,14 @@ exports.handler = async (event, context) => {
   }
 
   return client
-    .query(q.Get(q.Ref(q.Collection('devices'))))
+    .query(
+      q.Map(
+        q.Paginate(Documents(Collection('devices'))),
+        q.Lambda((x) => q.Get(x))
+      )
+    )
     .then((ret) => console.log(ret))
     .catch((err) => console.log(err));
 };
+
+devices;
