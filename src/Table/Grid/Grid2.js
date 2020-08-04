@@ -143,10 +143,11 @@ export default function Grid() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [gridRows, setGridRows] = useState([]);
-
+  const [first, setFirst] = useState(true);
   useEffect(() => {
-    if (!gridRows) {
+    if (first) {
       getRows();
+      setFirst(false);
     }
   });
 
