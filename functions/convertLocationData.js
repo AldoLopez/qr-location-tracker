@@ -1,5 +1,5 @@
 const { GEO_KEY } = process.env;
-import axios from 'axios';
+const axios = require('axios');
 
 exports.handler = async (event, context) => {
   const { identity, user } = context.clientContext;
