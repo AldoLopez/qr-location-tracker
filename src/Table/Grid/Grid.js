@@ -54,7 +54,10 @@ const Grid = () => {
               location: `${res.city}, ${res.state}`,
             };
           });
-          dataRows.then((rows) => setRows(rows));
+          dataRows.then((rows) => {
+            console.log(rows);
+            setRows(rows);
+          });
         })
         .then(() => {
           setLoading(false);
