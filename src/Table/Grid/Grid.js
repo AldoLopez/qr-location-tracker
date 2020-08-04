@@ -20,15 +20,17 @@ const getLocation = async (location) => {
       )
       .then((response) => {
         console.log(response);
-        const city = response.data.city;
-        const state = response.data.state_code;
-        const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
+        if (response.data) {
+          const city = response.data.city;
+          const state = response.data.state_code;
+          const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
 
-        return {
-          city,
-          state,
-          link,
-        };
+          return {
+            city,
+            state,
+            link,
+          };
+        }
       })
       .catch((err) => console.log(err));
   });

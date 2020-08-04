@@ -1,10 +1,11 @@
 import React from 'react';
 import Grid from './Grid/Grid';
+import './Table.css';
 
 class Table extends React.Component {
   render() {
     return (
-      <div>
+      <div className='middleTable'>
         <Grid />
       </div>
     );
