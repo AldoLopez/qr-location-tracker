@@ -88,7 +88,7 @@ const Grid = () => {
       });
   };
 
-  const [[sortColumn, sortDirection], setSort] = useState(['id', 'NONE']);
+  const [[sortColumn, sortDirection], setSort] = useState(['deviceId', 'NONE']);
 
   const sortedRows = useMemo(() => {
     if (sortDirection === 'NONE') return gridRows;
