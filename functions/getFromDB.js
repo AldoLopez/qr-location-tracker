@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
   return client
     .query(
       q.Map(
-        q.Paginate(Documents(Collection('devices'))),
+        q.Paginate(q.Match(q.Index('all'))),
         q.Lambda((x) => q.Get(x))
       )
     )
