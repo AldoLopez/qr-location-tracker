@@ -30,9 +30,7 @@ const Grid = () => {
   ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
   useEffect(() => {
-    if (!rows) {
-      getRows();
-    }
+    getRows();
   });
 
   const getRows = () => {
