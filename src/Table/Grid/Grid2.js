@@ -149,7 +149,7 @@ export default function Grid() {
       getRows();
       setFirst(false);
     }
-  });
+  }, []);
 
   const getRows = () => {
     generateHeaders().then((headers) => {
