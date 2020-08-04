@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
     .then((ret) => {
       return {
         statusCode: 200,
-        body: ret,
+        body: JSON.stringify(ret),
       };
     })
     .catch((err) => ({
