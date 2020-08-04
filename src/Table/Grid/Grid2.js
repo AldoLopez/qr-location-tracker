@@ -144,12 +144,6 @@ export default function Grid() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [gridRows, setGridRows] = useState([]);
   const [first, setFirst] = useState(true);
-  useEffect(() => {
-    if (first) {
-      getRows();
-      setFirst(false);
-    }
-  }, [getRows]);
 
   const getRows = () => {
     generateHeaders().then((headers) => {
@@ -176,6 +170,13 @@ export default function Grid() {
         .catch((err) => console.log(err));
     });
   };
+
+  useEffect(() => {
+    if (first) {
+      getRows();
+      setFirst(false);
+    }
+  }, [getRows, first]);
 
   const getLocation = (location) => {
     return axios
