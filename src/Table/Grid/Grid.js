@@ -46,7 +46,7 @@ const Grid = () => {
           const data = response.data.data;
           const dataRows = [];
           data.forEach(async (row) => {
-            await getLocation(JSON.parse(row.data.location)).then((res) => {
+            getLocation(JSON.parse(row.data.location)).then((res) => {
               dataRows.push({
                 deviceId: row.data.deviceId,
                 date: DateTime.fromJSDate(
@@ -85,30 +85,28 @@ const Grid = () => {
   };
 
   const getLocation = (location) => {
-    return generateHeaders().then((headers) => {
-      axios
-        .get('/.netlify/functions/convertLocationData', {
-          headers,
-          params: {
-            latitude: location.latitude,
-            longitude: location.longitude,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.data) {
-            const city = response.data.city;
-            const state = response.data.state_code;
-            const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
+    return axios
+      .get('/.netlify/functions/convertLocationData', {
+        headers,
+        params: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data) {
+          const city = response.data.city;
+          const state = response.data.state_code;
+          const link = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
 
-            return {
-              city,
-              state,
-              link,
-            };
-          }
-        });
-    });
+          return {
+            city,
+            state,
+            link,
+          };
+        }
+      });
   };
 
   const [direction, setDirection] = useState(true);
