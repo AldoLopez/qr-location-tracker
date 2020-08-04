@@ -18,11 +18,11 @@ const columns = [
   },
 ];
 
-getLocation = (location) => {
+const getLocation = (location) => {
   // TODO get google map url to lat/long and convert to city name
 };
 
-generateHeaders = () => {
+const generateHeaders = () => {
   const headers = { 'Content-Type': 'application/json' };
   if (netlifyIdentity.currentUser()) {
     return netlifyIdentity
@@ -43,13 +43,12 @@ const Grid = () => {
     if (!rows) {
       getRows();
     }
-  }),
-    [];
+  });
 
   const getRows = () => {
-    this.generateHeaders().then((headers) => {
+    generateHeaders().then((headers) => {
       axios
-        .get('/.netlify/functions/getFromDB', {
+        .get('https://qr-location.netlify.app/.netlify/functions/getFromDB', {
           headers,
         })
         .then((response) => {
@@ -59,13 +58,7 @@ const Grid = () => {
         .then(() => {
           setLoading(true);
         })
-        .catch((err) =>
-          this.setState({
-            loading: false,
-            success: false,
-            error: err.toString(),
-          })
-        );
+        .catch((err) => console.log(err));
     });
   };
 
