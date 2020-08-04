@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import { generateHeaders } from '../../identityActions';
 
 const Grid = () => {
-  const [rows, setRows] = useState(null);
+  const [gridRows, setGridRows] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const defaultColumnProperties = {
@@ -30,7 +30,7 @@ const Grid = () => {
   ].map((c) => ({ ...c, ...defaultColumnProperties }));
 
   useEffect(() => {
-    if (!rows) {
+    if (!gridRows) {
       getRows();
     }
   });
@@ -58,7 +58,7 @@ const Grid = () => {
           );
           dataRows.then((rows) => {
             console.log(rows);
-            setRows(rows);
+            setGridRows(rows);
           });
         })
         .then(() => {
@@ -113,9 +113,9 @@ const Grid = () => {
       <div>
         <DataGrid
           columns={columns}
-          rows={rows}
+          rows={gridRows}
           onSort={(sortColumn, sortDirection) =>
-            setRows(sortRows(rows, sortColumn, sortDirection))
+            setRows(sortRows(gridRows, sortColumn, sortDirection))
           }
         />
       </div>
