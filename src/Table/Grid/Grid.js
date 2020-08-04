@@ -3,6 +3,7 @@ import DataGrid from 'react-data-grid';
 import 'react-data-grid/dist/react-data-grid.css';
 import axios from 'axios';
 import netlifyIdentity from 'netlify-identity-widget';
+import { DateTime } from 'luxon';
 
 // const getLocation = (location) => {
 //   // TODO get google map url to lat/long and convert to city name
@@ -64,9 +65,9 @@ const Grid = () => {
           data.forEach((row) => {
             dataRows.push({
               deviceId: row.data.deviceId,
-              date: `${new Date(row.data.date).toDateString()} at${new Date(
-                row.data.date
-              ).toTimeString()}`,
+              date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
+                DateTime.DATETIME_MED
+              ),
               location: row.data.location,
             });
           });
