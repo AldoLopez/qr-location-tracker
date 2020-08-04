@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import DataGrid from 'react-data-grid';
 import 'react-data-grid/dist/react-data-grid.css';
 import axios from 'axios';
@@ -92,19 +92,35 @@ const Grid = () => {
       });
   };
 
-  const [direction, setDirection] = useState(true);
+  const [[sortColumn, sortDirection], setSort] = useState(['id', 'NONE']);
 
-  const sortRows = (initialRows, sortColumn, sortDirection) => (rows) => {
-    const comparer = (a, b) => {
-      if (direction) {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1;
-      } else {
-        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+  const sortedRows = useMemo(() => {
+    if (sortDirection === 'NONE') return gridRows;
+
+    let sortedRows = [...gridRows];
+    sortedRows = sortedRows.sort((a, b) =>
+      a[sortColumn].localeCompare(b[sortColumn])
+    );
+
+    return sortDirection === 'DESC' ? sortedRows.reverse() : sortedRows;
+  }, [gridRows, sortDirection, sortColumn]);
+
+  const handleRowsUpdate = useCallback(
+    ({ fromRow, toRow, updated }) => {
+      const newRows = [...sortedRows];
+
+      for (let i = fromRow; i <= toRow; i++) {
+        newRows[i] = { ...newRows[i], ...updated };
       }
-    };
-    setDirection(!direction);
-    return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
-  };
+
+      setGridRows(newRows);
+    },
+    [sortedRows]
+  );
+
+  const handleSort = useCallback((columnKey, direction) => {
+    setSort([columnKey, direction]);
+  }, []);
 
   if (loading) {
     return <div> Loading </div>;
@@ -114,9 +130,10 @@ const Grid = () => {
         <DataGrid
           columns={columns}
           rows={gridRows}
-          onSort={(sortColumn, sortDirection) =>
-            setRows(sortRows(gridRows, sortColumn, sortDirection))
-          }
+          onRowsUpdate={handleRowsUpdate}
+          sortColumn={sortColumn}
+          sortDirection={sortDirection}
+          onSort={handleSort}
         />
       </div>
     );
