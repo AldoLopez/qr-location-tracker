@@ -87,7 +87,6 @@ const Grid = () => {
   const getLocation = (location) => {
     return axios
       .get('/.netlify/functions/convertLocationData', {
-        headers,
         params: {
           latitude: location.latitude,
           longitude: location.longitude,
