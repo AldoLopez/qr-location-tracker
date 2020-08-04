@@ -127,7 +127,7 @@ const Grid = () => {
       <div>
         <DataGrid
           columns={columns}
-          rows={gridRows}
+          rows={sortedRows}
           onRowsUpdate={handleRowsUpdate}
           sortColumn={sortColumn}
           sortDirection={sortDirection}
