@@ -18,9 +18,9 @@ const columns = [
   },
 ];
 
-const getLocation = (location) => {
-  // TODO get google map url to lat/long and convert to city name
-};
+// const getLocation = (location) => {
+//   // TODO get google map url to lat/long and convert to city name
+// };
 
 const generateHeaders = () => {
   const headers = { 'Content-Type': 'application/json' };
@@ -54,6 +54,7 @@ const Grid = () => {
         .then((response) => {
           console.log(response);
           // set rows and massage
+          setRows(['1']);
         })
         .then(() => {
           setLoading(true);
