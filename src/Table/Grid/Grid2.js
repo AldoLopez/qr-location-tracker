@@ -154,17 +154,18 @@ export default function Grid() {
           .then(async (response) => {
             console.log(response);
             const data = response.data.data;
-            const dataRows = [];
-            data.forEach(async (row) => {
-              const res = await getLocation(JSON.parse(row.data.location));
-              dataRows.push({
-                deviceId: row.data.deviceId,
-                date: DateTime.fromJSDate(
-                  new Date(row.data.date)
-                ).toLocaleString(DateTime.DATETIME_MED),
-                location: `${res.city}, ${res.state}`,
-              });
-            });
+            const dataRows = await Promise.all(
+              data.map(async (row) => {
+                const res = await getLocation(JSON.parse(row.data.location));
+                return {
+                  deviceId: row.data.deviceId,
+                  date: DateTime.fromJSDate(
+                    new Date(row.data.date)
+                  ).toLocaleString(DateTime.DATETIME_MED),
+                  location: `${res.city}, ${res.state}`,
+                };
+              })
+            );
             setGridRows(dataRows);
           })
           .catch((err) => console.log(err));
