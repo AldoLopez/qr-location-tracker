@@ -269,7 +269,7 @@ export default function Grid() {
                       </TableCell>
                       <TableCell align='right'>{row.date}</TableCell>
                       <TableCell align='right'>
-                        <Link href={row.link} target='_blank' rel='noopener'>
+                        <Link href={row.mapLink} target='_blank' rel='noopener'>
                           {row.location}
                         </Link>
                       </TableCell>
