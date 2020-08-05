@@ -15,6 +15,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Link from '@material-ui/core/Link';
 
 function createData(deviceId, date, location) {
   return { deviceId, date, location };
@@ -163,6 +164,7 @@ export default function Grid() {
                     new Date(row.data.date)
                   ).toLocaleString(DateTime.DATETIME_MED),
                   location: `${res.city}, ${res.state}`,
+                  mapLink: res.link,
                 };
               })
             );
@@ -266,7 +268,16 @@ export default function Grid() {
                         {row.deviceId}
                       </TableCell>
                       <TableCell align='right'>{row.date}</TableCell>
-                      <TableCell align='right'>{row.location}</TableCell>
+                      <TableCell align='right'>
+                        <Link
+                          href={row.link}
+                          target='_blank'
+                          rel='noopener'
+                          onClick={preventDefault}
+                        >
+                          {row.location}
+                        </Link>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
