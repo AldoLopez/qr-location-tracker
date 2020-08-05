@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import queryString from 'query-string';
-import { withRouter } from 'react-router';
 
 class SendData extends React.Component {
   constructor(props) {
@@ -51,4 +50,4 @@ class SendData extends React.Component {
   }
 }
 
-export default withRouter(SendData);
+export default SendData;
