@@ -144,33 +144,32 @@ export default function Grid() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [gridRows, setGridRows] = useState([]);
 
-  const getRows = () => {
-    generateHeaders().then((headers) => {
-      axios
-        .get('/.netlify/functions/getFromDB', {
-          headers,
-        })
-        .then(async (response) => {
-          console.log(response);
-          const data = response.data.data;
-          const dataRows = [];
-          data.forEach(async (row) => {
-            const res = await getLocation(JSON.parse(row.data.location));
-            dataRows.push({
-              deviceId: row.data.deviceId,
-              date: DateTime.fromJSDate(new Date(row.data.date)).toLocaleString(
-                DateTime.DATETIME_MED
-              ),
-              location: `${res.city}, ${res.state}`,
-            });
-          });
-          setGridRows(dataRows);
-        })
-        .catch((err) => console.log(err));
-    });
-  };
-
   useEffect(() => {
+    const getRows = () => {
+      generateHeaders().then((headers) => {
+        axios
+          .get('/.netlify/functions/getFromDB', {
+            headers,
+          })
+          .then(async (response) => {
+            console.log(response);
+            const data = response.data.data;
+            const dataRows = [];
+            data.forEach(async (row) => {
+              const res = await getLocation(JSON.parse(row.data.location));
+              dataRows.push({
+                deviceId: row.data.deviceId,
+                date: DateTime.fromJSDate(
+                  new Date(row.data.date)
+                ).toLocaleString(DateTime.DATETIME_MED),
+                location: `${res.city}, ${res.state}`,
+              });
+            });
+            setGridRows(dataRows);
+          })
+          .catch((err) => console.log(err));
+      });
+    };
     getRows();
   }, []);
 
