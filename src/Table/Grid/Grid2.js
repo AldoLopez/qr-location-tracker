@@ -157,15 +157,20 @@ export default function Grid() {
             const data = response.data.data;
             const dataRows = await Promise.all(
               data.map(async (row) => {
-                const res = await getLocation(row.data.location);
-                return {
-                  deviceId: row.data.deviceId,
-                  date: DateTime.fromJSDate(
-                    new Date(row.data.date)
-                  ).toLocaleString(DateTime.DATETIME_MED),
-                  location: `${res.city}, ${res.state}`,
-                  mapLink: res.link,
-                };
+                if (
+                  typeof row.data.location !== undefined &&
+                  row.data.location
+                ) {
+                  const res = await getLocation(JSON.parse(row.data.location));
+                  return {
+                    deviceId: row.data.deviceId,
+                    date: DateTime.fromJSDate(
+                      new Date(row.data.date)
+                    ).toLocaleString(DateTime.DATETIME_MED),
+                    location: `${res.city}, ${res.state}`,
+                    mapLink: res.link,
+                  };
+                }
               })
             );
             setGridRows(dataRows);
@@ -177,7 +182,6 @@ export default function Grid() {
   }, []);
 
   const getLocation = (location) => {
-    location = JSON.parse(location);
     return axios
       .get('/.netlify/functions/convertLocationData', {
         params: {
