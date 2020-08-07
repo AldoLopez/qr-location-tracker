@@ -144,6 +144,7 @@ export default function Grid() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [gridRows, setGridRows] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getRows = () => {
@@ -174,8 +175,12 @@ export default function Grid() {
               })
             );
             setGridRows(dataRows);
+            setError(false);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            setError(true);
+          });
       });
     };
     getRows();
@@ -202,6 +207,11 @@ export default function Grid() {
             link,
           };
         }
+        this.setError(false);
+      })
+      .catch((err) => {
+        console.log(`Error converting data: ${err}`);
+        this.setError(true);
       });
   };
 
@@ -303,6 +313,11 @@ export default function Grid() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label='Dense padding'
       />
+      {error && (
+        <Alert severity='error'>
+          Something went wrong. Please reload the page.
+        </Alert>
+      )}
     </div>
   );
 }
