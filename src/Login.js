@@ -5,8 +5,7 @@ import netlifyIdentity from 'netlify-identity-widget';
 const login = () => netlifyIdentity.open();
 const Login = () => (
   <div>
-    <p>The open-source project to manage your open-source projects</p>
-    <Button onClick={login}>Login to Open Sauced</Button>
+    <p>Login to access</p>
   </div>
 );
 
