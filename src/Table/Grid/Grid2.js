@@ -157,7 +157,7 @@ export default function Grid() {
             const data = response.data.data;
             const dataRows = await Promise.all(
               data.map(async (row) => {
-                const res = await getLocation(JSON.parse(row.data.location));
+                const res = await getLocation(row.data.location);
                 return {
                   deviceId: row.data.deviceId,
                   date: DateTime.fromJSDate(
