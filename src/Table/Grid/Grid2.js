@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Link from '@material-ui/core/Link';
-import Alert from '@material-ui/core/Alert';
+import { Alert } from '@material-ui/lab';
 
 function createData(deviceId, date, location) {
   return { deviceId, date, location };
