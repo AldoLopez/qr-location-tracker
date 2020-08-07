@@ -177,6 +177,7 @@ export default function Grid() {
   }, []);
 
   const getLocation = (location) => {
+    location = JSON.parse(location);
     return axios
       .get('/.netlify/functions/convertLocationData', {
         params: {
